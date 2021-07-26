@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private CameraPoint cameraPoint;
+
     [SerializeField] private LayerMask layerToIgnore;
     private Camera cam;
     private Transform objectToMove;
@@ -12,8 +14,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 offset;
     void Start()
     {
+        cameraPoint = GetComponent<CameraPoint>();
         isDragging = false;
         cam = Camera.main;
+        cameraPoint.MoveToMiddlePoint();
     }
 
     void Update()
@@ -51,6 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             objectToMove = null;
             isDragging = false;
+            cameraPoint.MoveToMiddlePoint();
         }
 
     }
