@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private JointsRotation jointRotation;
+
     private CameraPoint cameraPoint;
 
     [SerializeField] private LayerMask layerToIgnore;
@@ -18,6 +20,8 @@ public class PlayerController : MonoBehaviour
         isDragging = false;
         cam = Camera.main;
         cameraPoint.MoveToMiddlePoint();
+        jointRotation = GetComponent<JointsRotation>();
+        jointRotation.RotateJoints();
     }
 
     void Update()
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
             Vector3 curPosition = cam.ScreenToWorldPoint(curScreenPoint) + offset;
             objectToMove.position = curPosition;
+            jointRotation.RotateJoints();
         }
 
         if (Input.GetMouseButtonUp(0) && isDragging)
