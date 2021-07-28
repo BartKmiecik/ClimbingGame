@@ -457,6 +457,7 @@ GameObject:
   - component: {fileID: 172302269}
   - component: {fileID: 172302270}
   - component: {fileID: 172302271}
+  - component: {fileID: 172302272}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Untagged
@@ -597,6 +598,28 @@ MonoBehaviour:
   p2: {fileID: 5985729074466710579}
   p3: {fileID: 1219064165}
   p4: {fileID: 1290830311}
+  limbsCollisionChecker: {fileID: 172302267}
+--- !u!114 &172302272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172302263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5365a89f5701ab642ad3472f28d2c2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singleLimb: 15
+  twoSameLimbs: 60
+  twoSameSideLimbs: 90
+  leftLeg: {fileID: 1290830311}
+  rightLeg: {fileID: 1219064165}
+  leftArm: {fileID: 5985729074466710579}
+  rightArm: {fileID: 5985729075575678971}
+  limbsCollisionChecker: {fileID: 172302267}
+  fall: {fileID: 172302270}
 --- !u!1 &175060714
 GameObject:
   m_ObjectHideFlags: 0

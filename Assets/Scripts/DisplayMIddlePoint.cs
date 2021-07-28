@@ -36,33 +36,33 @@ public class DisplayMIddlePoint : MonoBehaviour
             Vector3 temp = new Vector3(x2, y2, z2);
             Gizmos.DrawLine(temp, temp + new Vector3(1f, .6f, 0));
             Gizmos.DrawLine(temp, temp + new Vector3(-1f, .6f, 0));
-            angler = Mathf.Atan2(y2 - finalY, x2 - finalX) * 180 / Mathf.PI;
+            angler = Mathf.Atan2(finalY - y2,finalX - x2) * 180 / Mathf.PI;
         }
         else if (limbsCollisionChecker.rightFoot && limbsCollisionChecker.rightHand)
         {
             Vector3 temp = new Vector3((p1.position.x + p3.position.x) / 2, (p1.position.y + p3.position.y) / 2, (p1.position.z + p3.position.z) / 2);
             Gizmos.DrawLine(temp, temp + new Vector3(-1.78f, 1f, 0));
             Gizmos.DrawLine(temp, temp + new Vector3(-1.78f, -1f, 0));
-            angler = Mathf.Atan2(temp.y - finalY, temp.x - finalX) * 180 / Mathf.PI;
+            angler = Mathf.Atan2(finalY - temp.y, finalX - temp.x) * 180 / Mathf.PI;
         }
         else if (limbsCollisionChecker.rightFoot)
         {
             Gizmos.DrawLine(p3.position, p3.position + new Vector3(1f, 3.8f, 0));
             Gizmos.DrawLine(p3.position, p3.position + new Vector3(-1f, 3.8f, 0));
-            angler = Mathf.Atan2(p3.position.y - finalY, p3.position.x - finalX) * 180 / Mathf.PI;
+            angler = Mathf.Atan2(finalY - p3.position.y, finalX - p3.position.x) * 180 / Mathf.PI;
         }
         else if (limbsCollisionChecker.leftFoot && limbsCollisionChecker.leftHand)
         {
             Vector3 temp = new Vector3((p2.position.x + p4.position.x) / 2, (p2.position.y + p4.position.y) / 2, (p2.position.z + p4.position.z) / 2);
             Gizmos.DrawLine(temp, temp + new Vector3(1.78f, 1f, 0));
             Gizmos.DrawLine(temp, temp + new Vector3(1.78f, -1f, 0));
-            angler = Mathf.Atan2(temp.y - finalY, temp.x - finalX) * 180 / Mathf.PI;
+            angler = Mathf.Atan2(finalY - temp.y, finalX - temp.x) * 180 / Mathf.PI;
         }
         else if (limbsCollisionChecker.leftFoot)
         {
             Gizmos.DrawLine(p4.position, p4.position + new Vector3(1f, 3.8f, 0));
             Gizmos.DrawLine(p4.position, p4.position + new Vector3(-1f, 3.8f, 0));
-            angler = Mathf.Atan2(p4.position.y - finalY, p4.position.x - finalX) * 180 / Mathf.PI;
+            angler = Mathf.Atan2(finalY - p4.position.y, finalX - p4.position.x) * 180 / Mathf.PI;
         } 
 
 
@@ -83,8 +83,8 @@ public class DisplayMIddlePoint : MonoBehaviour
             Gizmos.DrawLine(p2.position, p2.position + new Vector3(-1f, -1.78f, 0));
         }
 
-         
+        angler -= 90;
 
-        Debug.Log("Leg angle: " + angler);
+        Debug.Log(angler);
     }
 }

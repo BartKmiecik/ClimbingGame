@@ -13,12 +13,10 @@ public class LimbsCollisionChecker : MonoBehaviour
 
     [SerializeField] private Color collidingColor, notColliding;
 
-    private bool shouldCheck;
     private void Start()
     {
         fall = GetComponent<FallFromWall>();
         leftFoot = rightFoot = leftHand = rightHand = true;
-        StartCoroutine(DeleyChecking());
     }
     public int LimbsTouching
     {
@@ -87,12 +85,6 @@ public class LimbsCollisionChecker : MonoBehaviour
             default:
                 break;
         }
-
-        if(limbsTouching <= 1 && shouldCheck)
-        {
-            fall.Fall();
-        }
-
     }
     public enum Limb
     {
@@ -100,12 +92,5 @@ public class LimbsCollisionChecker : MonoBehaviour
         rightHand,
         leftFoot,
         rightFoot
-    }
-
-    IEnumerator DeleyChecking()
-    {
-        yield return new WaitForSeconds(2f);
-        shouldCheck = true;
-    }
-    
+    }    
 }
