@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Transform eyeysTargeting;
+    private bool eyesStartTracking;
+
     private JointsRotation jointRotation;
 
     private CameraPoint cameraPoint;
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
         cameraPoint.MoveToMiddlePoint();
         jointRotation = GetComponent<JointsRotation>();
         jointRotation.RotateJoints();
+        eyesStartTracking = false;
     }
 
     void Update()
@@ -39,7 +43,13 @@ public class PlayerController : MonoBehaviour
                     isDragging = true;
                     screenPoint = cam.WorldToScreenPoint(gameObject.transform.position);
 
-                    offset = objectToMove.position - cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+                    offset = objectToMove.position - cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, .3f));
+
+                    Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, .3f);
+
+                    Vector3 curPosition = cam.ScreenToWorldPoint(curScreenPoint) + offset;
+
+                    eyeysTargeting.DOMove(curPosition, .3f).OnComplete(() => { eyesStartTracking = true; });
                 }
             }
         }
@@ -49,11 +59,17 @@ public class PlayerController : MonoBehaviour
     {
         if (isDragging)
         {
-            Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+            Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, .3f);
 
             Vector3 curPosition = cam.ScreenToWorldPoint(curScreenPoint) + offset;
             objectToMove.position = curPosition;
+            
             jointRotation.RotateJoints();
+
+            if (eyesStartTracking)
+            {
+                eyeysTargeting.position = curPosition;
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && isDragging)
@@ -61,6 +77,7 @@ public class PlayerController : MonoBehaviour
             objectToMove = null;
             isDragging = false;
             cameraPoint.MoveToMiddlePoint();
+            eyesStartTracking = false;
         }
 
     }
