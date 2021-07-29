@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LimbsCollisionChecker : MonoBehaviour
 {
+    private float sumWeight = 200f;
     private FallFromWall fall;
 
     public bool leftFoot, rightFoot, leftHand, rightHand;
@@ -12,6 +13,8 @@ public class LimbsCollisionChecker : MonoBehaviour
     [SerializeField] private Material lLIndicator, rLIndicator, lHIndicator, rHIndicator;
 
     [SerializeField] private Color collidingColor, notColliding;
+
+    [SerializeField] private SegmentsManager segmentsManager;
 
     private void Start()
     {
@@ -85,6 +88,8 @@ public class LimbsCollisionChecker : MonoBehaviour
             default:
                 break;
         }
+
+        AdjustLimbsWeight();
     }
     public enum Limb
     {
@@ -93,4 +98,27 @@ public class LimbsCollisionChecker : MonoBehaviour
         leftFoot,
         rightFoot
     }    
+
+    private void AdjustLimbsWeight()
+    {
+        float weight = sumWeight / limbsTouching;
+
+        segmentsManager.ChangeWeightAll(weight);
+        if (!leftFoot)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 10);
+        }
+        if (!rightFoot)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 10);
+        }
+        if (!leftHand)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftHand, 10);
+        }
+        if (!rightHand)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightHand, 10);
+        }
+    }
 }
