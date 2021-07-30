@@ -7,20 +7,24 @@ using UnityEngine.EventSystems;
 
 public class UIMapBuilder : MonoBehaviour
 {
-    enum state
+    enum UiBuildState
     {
         inactive,
         building,
         modyfing
     }
-
     [SerializeField] private Transform builderPanel;
     [SerializeField] private List<ScriptableHandle> holesList = new List<ScriptableHandle>();
     [SerializeField] private Transform uiHolder;
     [SerializeField] private GameObject iconPrefab;
     [SerializeField] private TextMeshProUGUI difficultText;
     [SerializeField] private Transform wall;
-    private state buildingState;
+    private UiBuildState buildingState;
+
+    private ShowIndicators showIndicators;
+    private HolesModyficator holesModyficator;
+
+    private List<GameObject> handlersList = new List<GameObject>();
 
     private GameObject holeToSpawn;
 
@@ -35,7 +39,9 @@ public class UIMapBuilder : MonoBehaviour
     }
     private void Start()
     {
-        buildingState = state.inactive;
+        holesModyficator = GetComponent<HolesModyficator>();
+        showIndicators = GetComponent<ShowIndicators>();
+        buildingState = UiBuildState.inactive;
         startingPos = builderPanel.localPosition;
         PopulateUIPanel();
     }
@@ -63,15 +69,22 @@ public class UIMapBuilder : MonoBehaviour
         this.holeToSpawn = hole;
     }
 
+    public void RemoveHole(GameObject hole)
+    {
+        handlersList.Remove(hole);
+        ShowIndicators();
+    }
+
     public void StartBuilding()
     {
         ShowHidePanel(false);
-        buildingState = state.building;
+        HideIndicators();
+        buildingState = UiBuildState.building;
     }
 
     private void Update()
     {
-        if (buildingState == state.building)
+        if (buildingState == UiBuildState.building)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -80,12 +93,48 @@ public class UIMapBuilder : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, 1000f))
                 {
-                    if (hit.collider.CompareTag("Wall") && EventSystem.current.IsPointerOverGameObject(-1) == false)
+                    if (hit.collider.CompareTag("Wall") && EventSystem.current.IsPointerOverGameObject(fingerID) == false)
                     {
-                        Instantiate(holeToSpawn, hit.point, Quaternion.identity).transform.SetParent(wall);
+                        GameObject temp = Instantiate(holeToSpawn, hit.point, Quaternion.identity);
+                        temp.transform.SetParent(wall);
+                        handlersList.Add(temp);
+                    }
+                }
+            }
+        } else if(buildingState == UiBuildState.modyfing)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, 1000f))
+                {
+                    if (hit.collider.CompareTag("Handlers"))
+                    {
+                        holesModyficator.ShowModyficationPanel(hit.collider.gameObject);
+                        HideIndicators();
                     }
                 }
             }
         }
+    }
+
+    public void ShowIndicators()
+    {
+        if(buildingState == UiBuildState.modyfing)
+        {
+            HideIndicators();
+        } else
+        {
+            showIndicators.Show(handlersList);
+            buildingState = UiBuildState.modyfing;
+        }
+    }
+
+    public void HideIndicators()
+    {
+        showIndicators.Hide();
+        buildingState = UiBuildState.inactive;
     }
 }
