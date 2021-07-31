@@ -110,7 +110,6 @@ public class HolesModyficator : MonoBehaviour
                     Mathf.Clamp(curremtScale.y + (Input.GetAxis("Mouse Y") * scaleSpeed * Time.deltaTime), 5, 100), curremtScale.z);
 
                 holeToModyfication.transform.localScale = newScale;
-
             }
         }
 

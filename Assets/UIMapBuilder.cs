@@ -139,4 +139,9 @@ public class UIMapBuilder : MonoBehaviour
         showIndicators.Hide();
         buildingState = UiBuildState.inactive;
     }
+
+    public void ChangeHolesColor(Color color)
+    {
+        holesMaterial.color = color;
+    }
 }
