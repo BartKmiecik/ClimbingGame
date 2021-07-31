@@ -11,6 +11,7 @@ public class HolesModyficator : MonoBehaviour
         nothing,
         move,
         scale,
+        rotate
     }
 
     [SerializeField] private Transform modyficationPanel;
@@ -19,6 +20,10 @@ public class HolesModyficator : MonoBehaviour
     private ModyficationState state;
 
     private UIMapBuilder uiMapBuilder;
+
+    private Camera cam;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float scaleSpeed = 100f;
 
     private int fingerID = -1;
     private void Awake()
@@ -30,6 +35,7 @@ public class HolesModyficator : MonoBehaviour
 
     private void Start()
     {
+        cam = Camera.main;
         uiMapBuilder = GetComponent<UIMapBuilder>();
         startingPos = modyficationPanel.localPosition;
     }
@@ -60,14 +66,24 @@ public class HolesModyficator : MonoBehaviour
         state = ModyficationState.move;
     }
 
+    public void Rotate()
+    {
+        state = ModyficationState.rotate;
+    }
+
+    public void Scale()
+    {
+        state = ModyficationState.scale;
+    }
+
     private void Update()
     {
         if(state == ModyficationState.move)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
                 if (Physics.Raycast(ray, out hit, 1000f))
                 {
@@ -77,6 +93,26 @@ public class HolesModyficator : MonoBehaviour
                     }
                 }
             }
+        } 
+        if(state == ModyficationState.rotate)
+        {
+            if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject(fingerID) == false)
+            {
+                holeToModyfication.transform.Rotate(0,0, (Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime), Space.World);
+            }
         }
+        if(state == ModyficationState.scale)
+        {
+            if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject(fingerID) == false)
+            {
+                Vector3 curremtScale = holeToModyfication.transform.localScale;
+                Vector3 newScale = new Vector3(Mathf.Clamp(curremtScale.x + (Input.GetAxis("Mouse X") * scaleSpeed * Time.deltaTime), 5f, 100),
+                    Mathf.Clamp(curremtScale.y + (Input.GetAxis("Mouse Y") * scaleSpeed * Time.deltaTime), 5, 100), curremtScale.z);
+
+                holeToModyfication.transform.localScale = newScale;
+
+            }
+        }
+
     }
 }

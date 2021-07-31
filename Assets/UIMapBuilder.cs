@@ -19,6 +19,7 @@ public class UIMapBuilder : MonoBehaviour
     [SerializeField] private GameObject iconPrefab;
     [SerializeField] private TextMeshProUGUI difficultText;
     [SerializeField] private Transform wall;
+    [SerializeField] private Material holesMaterial;
     private UiBuildState buildingState;
 
     private ShowIndicators showIndicators;
@@ -96,6 +97,7 @@ public class UIMapBuilder : MonoBehaviour
                     if (hit.collider.CompareTag("Wall") && EventSystem.current.IsPointerOverGameObject(fingerID) == false)
                     {
                         GameObject temp = Instantiate(holeToSpawn, hit.point, Quaternion.identity);
+                        temp.GetComponent<ChangeMaterial>().ChangeMat(holesMaterial);
                         temp.transform.SetParent(wall);
                         handlersList.Add(temp);
                     }

@@ -1082,10 +1082,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1843241317}
-        m_TargetAssemblyTypeName: UIMapBuilder, Assembly-CSharp
-        m_MethodName: ShowHidePanel
-        m_Mode: 6
+      - m_Target: {fileID: 1843241320}
+        m_TargetAssemblyTypeName: HolesModyficator, Assembly-CSharp
+        m_MethodName: Rotate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1346,10 +1346,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1843241317}
-        m_TargetAssemblyTypeName: UIMapBuilder, Assembly-CSharp
-        m_MethodName: ShowHidePanel
-        m_Mode: 6
+      - m_Target: {fileID: 1843241320}
+        m_TargetAssemblyTypeName: HolesModyficator, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2558,6 +2558,7 @@ MonoBehaviour:
   iconPrefab: {fileID: 982472670756771470, guid: 593742902c629834a829e6032576d377, type: 3}
   difficultText: {fileID: 1804497659}
   wall: {fileID: 1401873901}
+  holesMaterial: {fileID: 2100000, guid: 0ad94a487650dbe4e9a24f903a72d6f8, type: 2}
 --- !u!4 &1843241318
 Transform:
   m_ObjectHideFlags: 0
@@ -2598,6 +2599,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modyficationPanel: {fileID: 1100159029}
+  rotationSpeed: 500
+  scaleSpeed: 100
 --- !u!1 &2045357025
 GameObject:
   m_ObjectHideFlags: 0
