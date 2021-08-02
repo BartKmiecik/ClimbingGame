@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 0.1
+  scriptableHandle: {fileID: 11400000, guid: fe1b3c4e2ed42bb4c92cee9ef3a31e42, type: 2}
 --- !u!114 &-3639335956253530638
 MonoBehaviour:
   m_ObjectHideFlags: 0

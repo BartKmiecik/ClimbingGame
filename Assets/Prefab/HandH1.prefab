@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 0.1
+  scriptableHandle: {fileID: 11400000, guid: a26156ec023f8514dba01a72aeef3701, type: 2}
 --- !u!114 &4566381628011703853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8a77987ed5368488ad08179bf4c51b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeMaterial: {fileID: 7109068560366715335}
 --- !u!1 &6761450930473794919
 GameObject:
   m_ObjectHideFlags: 0
