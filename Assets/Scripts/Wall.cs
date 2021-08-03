@@ -6,13 +6,11 @@ public class Wall : MonoBehaviour
 {
     public List<Handle> handlesList = new List<Handle>();
     [SerializeField] private PersistableSO persistableSO;
-    private void Start()
-    {
-        
-    }
 
     public void LoadLevel(string levelName)
     {
+        Debug.Log(levelName);
+
         handlesList = persistableSO.LoadNewLevel(levelName);
 
         for(int i = 1; i < transform.childCount; i++)

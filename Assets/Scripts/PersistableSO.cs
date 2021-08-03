@@ -7,7 +7,7 @@ public class PersistableSO : MonoBehaviour
 {
     public CustomWalllsCount wallsList;
 
-    private void Start()
+    private void Awake()
     {
         LoadCustomWallsList();
     }
@@ -50,10 +50,10 @@ public class PersistableSO : MonoBehaviour
 
     private List<Handle> LoadWall(string wallName)
     {
-        if (File.Exists(Application.persistentDataPath + string.Format("/{0}{1}.pso", wallName, 0)))
+        if (File.Exists(Application.persistentDataPath + string.Format("/{0}{1}.pso", wallName, 1)))
         {
             List<Handle> handlesList = new List<Handle>();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 1; i < 1000; i++)
             {
                 if (File.Exists(Application.persistentDataPath + string.Format("/{0}{1}.pso", wallName, i)))
                 {
