@@ -7,6 +7,7 @@ TagManager:
   - Movable
   - Handlers
   - Wall
+  - Hand
   layers:
   - Default
   - TransparentFX
