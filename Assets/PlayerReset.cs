@@ -9,6 +9,7 @@ public class PlayerReset : MonoBehaviour
     private LimbsCollisionChecker collisionChecker;
     private ExtraChecking extraChecking;
     private TirednessSystem tirednessSystem;
+    private ShowWarrining showWarrning;
     private void Start()
     {
         tirednessSystem = GetComponent<TirednessSystem>();
@@ -34,6 +35,7 @@ public class PlayerReset : MonoBehaviour
         rightLeg.position = rightLStart;
         //body.position = bodyStart;
         tirednessSystem.ResetTirednes();
+        showWarrning.ShowText(false);
     }
 
     IEnumerator DeleyChecking()
