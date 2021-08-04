@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1042371526060432062}
   - component: {fileID: 7048320327155984353}
   - component: {fileID: 4966514928514329144}
-  - component: {fileID: 7080514369276291320}
+  - component: {fileID: -3639335956253530638}
   m_Layer: 8
-  m_Name: HandH2
+  m_Name: HandH4
   m_TagString: Handlers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042371526060432063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 0, z: 0.246}
+  m_LocalPosition: {x: 0.16, y: 0, z: -0.05900002}
   m_LocalScale: {x: 15, y: 15, z: 15}
   m_Children:
   - {fileID: 2665504230201449069}
@@ -47,7 +47,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4711208715938537054, guid: c578e9b29500e1f4d9158051873eea3d, type: 3}
+  m_Mesh: {fileID: 4711208715938537054, guid: 4a2e53fcdc57a734f8be29c91a4ac01f, type: 3}
 --- !u!114 &4966514928514329144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 0.1
-  scriptableHandle: {fileID: 11400000, guid: 21dc1a8de8033624ea2b6265b85cc8c2, type: 2}
---- !u!114 &7080514369276291320
+  scriptableHandle: {fileID: 11400000, guid: fe1b3c4e2ed42bb4c92cee9ef3a31e42, type: 2}
+--- !u!114 &-3639335956253530638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,4 +154,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6761450930473794919}
-  m_Mesh: {fileID: 4711208715938537054, guid: c578e9b29500e1f4d9158051873eea3d, type: 3}
+  m_Mesh: {fileID: 4711208715938537054, guid: 4a2e53fcdc57a734f8be29c91a4ac01f, type: 3}

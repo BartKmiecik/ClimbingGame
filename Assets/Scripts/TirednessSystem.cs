@@ -8,11 +8,17 @@ public class TirednessSystem : MonoBehaviour
     private float leftFootStrenght, rightFootStrenght, leftHandStrenght, rightHandStrenght;
     private float currentLeftFootStr, currentRightFootStr, currentLeftHandStr, currentRightHandStr;
     [SerializeField] private Image lFI, rFI, lHI, rHI;
+    [SerializeField] private float strenght;
     void Awake()
     {
         limbsCollisionChecker = GetComponent<LimbsCollisionChecker>();
-        leftFootStrenght = rightFootStrenght = leftHandStrenght = rightHandStrenght = 2;
-        currentLeftFootStr = currentRightFootStr = currentLeftHandStr = currentRightHandStr = 2;
+        ResetTirednes();
+    }
+
+    public void ResetTirednes()
+    {
+        leftFootStrenght = rightFootStrenght = leftHandStrenght = rightHandStrenght = strenght;
+        currentLeftFootStr = currentRightFootStr = currentLeftHandStr = currentRightHandStr = strenght;
     }
 
     void Update()

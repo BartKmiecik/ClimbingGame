@@ -16,10 +16,13 @@ public class LimbsCollisionChecker : MonoBehaviour
 
     [SerializeField] private SegmentsManager segmentsManager;
 
+    private PlayerReset playerReset;
+
     private void Start()
     {
         fall = GetComponent<FallFromWall>();
         leftFoot = rightFoot = leftHand = rightHand = true;
+        playerReset = GetComponent<PlayerReset>();
     }
     public int LimbsTouching
     {
@@ -87,6 +90,11 @@ public class LimbsCollisionChecker : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        if(limbsTouching > 3)
+        {
+            playerReset.SetStartingPosition();
         }
 
         AdjustLimbsWeight();

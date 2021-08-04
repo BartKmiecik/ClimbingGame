@@ -6,7 +6,12 @@ public class FallFromWall : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BioIK.BioIK bioIK;
+    private PlayerReset playerReset;
 
+    private void Start()
+    {
+        playerReset = GetComponent<PlayerReset>();
+    }
     public void Fall()
     {
         rb.isKinematic = false;
@@ -18,6 +23,10 @@ public class FallFromWall : MonoBehaviour
     IEnumerator Restart()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(0);
+        // SceneManager.LoadScene("GameScene");
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        bioIK.enabled = true;
+        playerReset.ResetPosition();
     }
 }
