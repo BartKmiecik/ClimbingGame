@@ -38,6 +38,7 @@ public class SegmentsManager : MonoBehaviour
         leftLeg,
         rightLeg,
         leftHand,
-        rightHand
+        rightHand,
+        inactive
     }
 }

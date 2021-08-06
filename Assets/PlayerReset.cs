@@ -15,7 +15,7 @@ public class PlayerReset : MonoBehaviour
         tirednessSystem = GetComponent<TirednessSystem>();
         collisionChecker = GetComponent<LimbsCollisionChecker>();
         extraChecking = GetComponent<ExtraChecking>();
-
+        showWarrning = GetComponent<ShowWarrining>();
         StartCoroutine(DeleyChecking());
     }
 
@@ -29,6 +29,7 @@ public class PlayerReset : MonoBehaviour
     }
     public void ResetPosition()
     {
+        StartCoroutine(DeleyChecking());
         leftHand.position = leftHStart;
         rightHand.position = rightHStart;
         leftLeg.position = leftLStart;
@@ -36,13 +37,15 @@ public class PlayerReset : MonoBehaviour
         //body.position = bodyStart;
         tirednessSystem.ResetTirednes();
         showWarrning.ShowText(false);
+        
     }
 
     IEnumerator DeleyChecking()
     {
+        extraChecking.enabled = false;
+        collisionChecker.enabled = false;
         yield return new WaitForSeconds(1f);
         extraChecking.enabled = true;
         collisionChecker.enabled = true;
-
     }
 }

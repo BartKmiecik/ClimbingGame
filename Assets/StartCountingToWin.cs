@@ -9,8 +9,12 @@ public class StartCountingToWin : MonoBehaviour
     private float counter = 3f;
     [SerializeField] private TextMeshProUGUI countingText;
     [SerializeField] private Transform countingTextTransform;
+
+    [SerializeField] private GameObject winningPanel;
+    private Vector3 winningPanelStartingPos;
     private void Start()
     {
+        winningPanelStartingPos = winningPanel.transform.localPosition;
         hands = 0;
         countingTextTransform.gameObject.SetActive(false);
     }
@@ -48,10 +52,28 @@ public class StartCountingToWin : MonoBehaviour
             if(counter < 0)
             {
                 counter = 0;
+                countingText.text = "You win!";
+                //Popup panel that indicate how much your strenght increase and allow player to decide what to do next (next wall, or go back to menu)
+                //Right now just focus on simple panel next game / back to menu
+            } else
+            {
+                countingText.text = counter.ToString("F1");
             }
-            countingText.text = counter.ToString("F1");
         }
 
         Debug.Log("Win");
+
+        ShowWinningPanel(true);
+    }
+
+    public void ShowWinningPanel(bool show)
+    {
+        if (show)
+        {
+            winningPanel.transform.DOLocalMove(Vector3.zero, 1, false);
+        } else
+        {
+            winningPanel.transform.DOLocalMove(winningPanelStartingPos, 1, false);
+        }
     }
 }

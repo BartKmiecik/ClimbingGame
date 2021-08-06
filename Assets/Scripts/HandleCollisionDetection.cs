@@ -26,15 +26,23 @@ public class HandleCollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isColliding = true;
-        difficulty = other.GetComponent<HandleDifficulty>().Difficulty;
-        limbsCollisionChecker.SetCollision(limb, isColliding, difficulty);
+        if (other.CompareTag("Handlers"))
+        {
+            isColliding = true;
+            difficulty = other.GetComponent<HandleDifficulty>().Difficulty;
+            limbsCollisionChecker.SetCollision(limb, isColliding, difficulty);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isColliding = false;
-        difficulty = 0;
-        limbsCollisionChecker.SetCollision(limb, isColliding, difficulty);
+        if (other.CompareTag("Handlers"))
+        {
+            isColliding = false;
+            difficulty = 0;
+            limbsCollisionChecker.SetCollision(limb, isColliding, difficulty);
+        }
+
     }
 }

@@ -32,6 +32,11 @@ public class MainMenu : MonoBehaviour
         campainPanel.DOLocalMove(Vector3.zero, 1, false);
     }
 
+    public void LoadCampainMap(string wallName)
+    {
+        PlayerPrefs.SetString("Level", wallName);
+        SceneManager.LoadScene("GameScene");
+    }
     public void HideCampainPanel()
     {
         customOrCamp.DOLocalMove(Vector3.zero, 1, false);

@@ -5,7 +5,6 @@ using UnityEngine;
 public class LimbsCollisionChecker : MonoBehaviour
 {
     private float sumWeight = 200f;
-    private FallFromWall fall;
 
     public bool leftFoot, rightFoot, leftHand, rightHand;
     public float lFootDiff, rFootDiff, lHandDiff, rHandDiff;
@@ -18,15 +17,21 @@ public class LimbsCollisionChecker : MonoBehaviour
 
     private PlayerReset playerReset;
 
+    private SegmentsManager.LimbPosition draggedLimb;
     private void Start()
     {
-        fall = GetComponent<FallFromWall>();
+        draggedLimb = SegmentsManager.LimbPosition.inactive;
         leftFoot = rightFoot = leftHand = rightHand = true;
         playerReset = GetComponent<PlayerReset>();
     }
     public int LimbsTouching
     {
         get { return limbsTouching; }
+    }
+
+    public void ChangeDraggedLimb(SegmentsManager.LimbPosition pos)
+    {
+        draggedLimb = pos;
     }
     public void SetCollision(Limb limb, bool colliding, float diff)
     {
@@ -92,7 +97,7 @@ public class LimbsCollisionChecker : MonoBehaviour
                 break;
         }
 
-        if(limbsTouching > 3)
+        if(limbsTouching > 3 && playerReset != null)
         {
             playerReset.SetStartingPosition();
         }
@@ -114,19 +119,36 @@ public class LimbsCollisionChecker : MonoBehaviour
         segmentsManager.ChangeWeightAll(weight);
         if (!leftFoot)
         {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 10);
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 15);
         }
-        if (!rightFoot)
+        if (!rightFoot && draggedLimb != SegmentsManager.LimbPosition.rightLeg)
         {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 10);
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 15);
         }
-        if (!leftHand)
+        if (!leftHand && draggedLimb != SegmentsManager.LimbPosition.leftHand)
         {
             segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftHand, 10);
         }
-        if (!rightHand)
+        if (!rightHand && draggedLimb != SegmentsManager.LimbPosition.rightHand)
         {
             segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightHand, 10);
+        }
+
+        if(draggedLimb != SegmentsManager.LimbPosition.leftLeg)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 30);
+        }
+        if (draggedLimb != SegmentsManager.LimbPosition.rightLeg)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 30);
+        }
+        if (draggedLimb != SegmentsManager.LimbPosition.leftHand)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftHand, 20);
+        }
+        if (draggedLimb != SegmentsManager.LimbPosition.rightHand)
+        {
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightHand, 20);
         }
     }
 }

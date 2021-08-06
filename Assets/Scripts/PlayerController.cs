@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isDragging;
     private Vector3 screenPoint;
     private Vector3 offset;
+
     void Start()
     {
         cameraPoint = GetComponent<CameraPoint>();

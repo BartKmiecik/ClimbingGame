@@ -27,140 +27,151 @@ public class ExtraChecking : MonoBehaviour
         StartCoroutine(DeleyChecking());
         showWarrining = GetComponent<ShowWarrining>();
     }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DeleyChecking());
+    }
+
+    private void OnDisable()
+    {
+        isGameStarted = false;
+    }
     private void LateUpdate()
     {
-        if(deleay < 3)
+        if (isGameStarted)
         {
-            ++deleay;
-        } else
-        {
-            deleay = 0;
-            if(limbsCollisionChecker.LimbsTouching < 4 && limbsCollisionChecker.LimbsTouching > 0)
+            if (deleay < 3)
             {
-                if(limbsCollisionChecker.LimbsTouching == 3)
+                ++deleay;
+            }
+            else
+            {
+                deleay = 0;
+                if (limbsCollisionChecker.LimbsTouching < 4 && limbsCollisionChecker.LimbsTouching > 0)
                 {
-                    showWarrining.ShowText(false);
-                    return;
-                }
-                //Legs
-                float x1 = (leftLeg.position.x + rightLeg.position.x) / 2;
-                float y1 = (leftLeg.position.y + rightLeg.position.y) / 2;
-                float z1 = (leftLeg.position.z + rightLeg.position.z) / 2;
-                //Hands
-                float x2 = (leftArm.position.x + rightArm.position.x) / 2;
-                float y2 = (leftArm.position.y + rightArm.position.y) / 2;
-                float z2 = (leftArm.position.z + rightArm.position.z) / 2;
-                //MIddle
-                float finalX = (x1 + x2) / 2;
-                float finalY = (y1 + y2) / 2;
-                float finalZ = (z1 + z2) / 2;
-
-                //// Calculate legs
-
-                if (limbsCollisionChecker.leftFoot && limbsCollisionChecker.rightFoot)
-                {
-                    float angle = Mathf.Atan2(finalY - y1, finalX - x1) * 180 / Mathf.PI - 90;
-                    if (angle <= -(twoSameLimbs - showWarningDegree) || angle >= (twoSameLimbs - showWarningDegree))
+                    if (limbsCollisionChecker.LimbsTouching == 3)
                     {
-                        showWarrining.ShowText(true);
-                    } else showWarrining.ShowText(false);
-                    if (angle <= -twoSameLimbs || angle >= twoSameLimbs)
-                    {
-                        fall.Fall();
+                        showWarrining.ShowText(false);
+                        return;
                     }
-                }
-                else if (limbsCollisionChecker.rightFoot && limbsCollisionChecker.rightHand)
-                {
-                    float angle = Mathf.Atan2(finalY - (rightLeg.position.y + rightArm.position.y) / 2, finalX - (rightLeg.position.x + rightArm.position.x) / 2) * 180 / Mathf.PI - 90;
+                    //Legs
+                    float x1 = (leftLeg.position.x + rightLeg.position.x) / 2;
+                    float y1 = (leftLeg.position.y + rightLeg.position.y) / 2;
+                    float z1 = (leftLeg.position.z + rightLeg.position.z) / 2;
+                    //Hands
+                    float x2 = (leftArm.position.x + rightArm.position.x) / 2;
+                    float y2 = (leftArm.position.y + rightArm.position.y) / 2;
+                    float z2 = (leftArm.position.z + rightArm.position.z) / 2;
+                    //MIddle
+                    float finalX = (x1 + x2) / 2;
+                    float finalY = (y1 + y2) / 2;
+                    float finalZ = (z1 + z2) / 2;
 
-                    if (((angle <= (twoSameSideLimbs + showWarningDegree)) || (angle <= -(210 - showWarningDegree) - (twoSameSideLimbs / 2))))
-                    {
-                        showWarrining.ShowText(true);
-                    }
-                    else showWarrining.ShowText(false);
+                    //// Calculate legs
 
-                    if (!((angle >= twoSameSideLimbs) && (angle <= (twoSameSideLimbs + twoSameSideLimbs/2)) || ((angle >= -210 - twoSameSideLimbs) && (angle <= -210 - (twoSameSideLimbs/ 2)))))
+                    if (limbsCollisionChecker.leftFoot && limbsCollisionChecker.rightFoot)
                     {
-                        showWarrining.ShowText(true);
-                        float angle2 = Mathf.Atan2(finalY - rightLeg.position.y, finalX - rightLeg.position.x) * 180 / Mathf.PI - 90;
-                        if(angle2 <= -(singleLimb + extraOffset)|| angle2 >= (singleLimb + extraOffset))
+                        float angle = Mathf.Atan2(finalY - y1, finalX - x1) * 180 / Mathf.PI - 90;
+                        if (angle <= -(twoSameLimbs - showWarningDegree) || angle >= (twoSameLimbs - showWarningDegree))
                         {
-                            Debug.LogError("Right Foot + arm: " + angle2);
+                            showWarrining.ShowText(true);
+                        }
+                        else showWarrining.ShowText(false);
+                        if (angle <= -twoSameLimbs || angle >= twoSameLimbs)
+                        {
                             fall.Fall();
                         }
                     }
-                    
-                }
-                else if (limbsCollisionChecker.rightFoot && !limbsCollisionChecker.leftHand)
-                {
-                    float angle = Mathf.Atan2(finalY - rightLeg.position.y, finalX - rightLeg.position.x) * 180 / Mathf.PI - 90;
-                    if (angle < -(singleLimb - showWarningDegree) || angle > (singleLimb - showWarningDegree))
+                    else if (limbsCollisionChecker.rightFoot && limbsCollisionChecker.rightHand)
                     {
-                        showWarrining.ShowText(true);
-                    }
-                    else showWarrining.ShowText(false);
-                    if (angle < -singleLimb || angle > singleLimb)
-                    {
-                        Debug.LogError("Right Foot");
-                        fall.Fall();
-                    }
-                }
-                else if (limbsCollisionChecker.leftFoot && limbsCollisionChecker.leftHand)
-                {
-                    float angle = Mathf.Atan2(finalY - (leftLeg.position.y + leftArm.position.y) / 2, finalX - (leftLeg.position.x + leftArm.position.x) / 2) * 180 / Mathf.PI - 90;
+                        float angle = Mathf.Atan2(finalY - (rightLeg.position.y + rightArm.position.y) / 2, finalX - (rightLeg.position.x + rightArm.position.x) / 2) * 180 / Mathf.PI - 90;
 
-                    if (angle > -(twoSameSideLimbs - showWarningDegree) || angle < 2 * -twoSameSideLimbs + showWarningDegree)
-                    {
-                        showWarrining.ShowText(true);
-                    }
-                    else showWarrining.ShowText(false);
-
-                    if (!(angle < -twoSameSideLimbs || angle > 2 * -twoSameSideLimbs))
-                    {
-                        
-                        float angle2 = Mathf.Atan2(finalY - leftLeg.position.y, finalX - leftLeg.position.x) * 180 / Mathf.PI - 90;
-                        if (angle2 <= -(singleLimb + extraOffset) || angle2 >= (singleLimb + extraOffset))
+                        if (((angle <= (twoSameSideLimbs + showWarningDegree)) || (angle <= -(210 - showWarningDegree) - (twoSameSideLimbs / 2))))
                         {
-                            Debug.LogError("Left Foot + arm: " + angle2);
+                            showWarrining.ShowText(true);
+                        }
+                        else showWarrining.ShowText(false);
+
+                        if (!((angle >= twoSameSideLimbs) && (angle <= (twoSameSideLimbs + twoSameSideLimbs / 2)) || ((angle >= -210 - twoSameSideLimbs) && (angle <= -210 - (twoSameSideLimbs / 2)))))
+                        {
+                            showWarrining.ShowText(true);
+                            float angle2 = Mathf.Atan2(finalY - rightLeg.position.y, finalX - rightLeg.position.x) * 180 / Mathf.PI - 90;
+                            if (angle2 <= -(singleLimb + extraOffset) || angle2 >= (singleLimb + extraOffset))
+                            {
+                                fall.Fall();
+                            }
+                        }
+
+                    }
+                    else if (limbsCollisionChecker.rightFoot && !limbsCollisionChecker.leftHand)
+                    {
+                        float angle = Mathf.Atan2(finalY - rightLeg.position.y, finalX - rightLeg.position.x) * 180 / Mathf.PI - 90;
+                        if (angle < -(singleLimb - showWarningDegree) || angle > (singleLimb - showWarningDegree))
+                        {
+                            showWarrining.ShowText(true);
+                        }
+                        else showWarrining.ShowText(false);
+                        if (angle < -singleLimb || angle > singleLimb)
+                        {
                             fall.Fall();
                         }
                     }
-                    
+                    else if (limbsCollisionChecker.leftFoot && limbsCollisionChecker.leftHand)
+                    {
+                        float angle = Mathf.Atan2(finalY - (leftLeg.position.y + leftArm.position.y) / 2, finalX - (leftLeg.position.x + leftArm.position.x) / 2) * 180 / Mathf.PI - 90;
+
+                        if (angle > -(twoSameSideLimbs - showWarningDegree) || angle < 2 * -twoSameSideLimbs + showWarningDegree)
+                        {
+                            showWarrining.ShowText(true);
+                        }
+                        else showWarrining.ShowText(false);
+
+                        if (!(angle < -twoSameSideLimbs || angle > 2 * -twoSameSideLimbs))
+                        {
+
+                            float angle2 = Mathf.Atan2(finalY - leftLeg.position.y, finalX - leftLeg.position.x) * 180 / Mathf.PI - 90;
+                            if (angle2 <= -(singleLimb + extraOffset) || angle2 >= (singleLimb + extraOffset))
+                            {
+                                fall.Fall();
+                            }
+                        }
+
+                    }
+                    else if (limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightHand)
+                    {
+                        float angle = Mathf.Atan2(finalY - leftLeg.position.y, finalX - leftLeg.position.x) * 180 / Mathf.PI - 90;
+                        if (angle < -(singleLimb - showWarningDegree) || angle > (singleLimb - showWarningDegree))
+                        {
+                            showWarrining.ShowText(true);
+                        }
+                        else showWarrining.ShowText(false);
+                        if (angle < -singleLimb || angle > singleLimb)
+                        {
+                            fall.Fall();
+                        }
+                    }
+                    else if ((!limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightFoot) && limbsCollisionChecker.leftHand)
+                    {
+                        float angle = Mathf.Atan2(leftArm.position.y - finalY, leftArm.position.x - finalX) * 180 / Mathf.PI - 90;
+                        if (angle < -singleLimb || angle > singleLimb)
+                        {
+                            fall.Fall();
+                        }
+                    }
+                    else if ((!limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightFoot) && limbsCollisionChecker.rightHand)
+                    {
+                        float angle = Mathf.Atan2(rightArm.position.y - finalY, rightArm.position.x - finalX) * 180 / Mathf.PI - 90;
+                        if (angle < -singleLimb || angle > singleLimb)
+                        {
+                            fall.Fall();
+                        }
+                    }
                 }
-                else if (limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightHand)
+                else if (limbsCollisionChecker.LimbsTouching == 0)
                 {
-                    float angle = Mathf.Atan2(finalY - leftLeg.position.y, finalX - leftLeg.position.x) * 180 / Mathf.PI - 90;
-                    if (angle < -(singleLimb - showWarningDegree) || angle > (singleLimb - showWarningDegree))
-                    {
-                        showWarrining.ShowText(true);
-                    }
-                    else showWarrining.ShowText(false);
-                    if (angle < -singleLimb || angle > singleLimb)
-                    {
-                        Debug.LogError("Left Foot: " + angle);
-                        fall.Fall();
-                    }
-                } else if((!limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightFoot) && limbsCollisionChecker.leftHand)
-                {
-                    float angle = Mathf.Atan2(leftArm.position.y - finalY, leftArm.position.x - finalX) * 180 / Mathf.PI - 90;
-                    if (angle < -singleLimb || angle > singleLimb)
-                    {
-                        Debug.LogError("Left hand: " + angle);
-                        fall.Fall();
-                    }
+                    fall.Fall();
                 }
-                else if ((!limbsCollisionChecker.leftFoot && !limbsCollisionChecker.rightFoot) && limbsCollisionChecker.rightHand)
-                {
-                    float angle = Mathf.Atan2(rightArm.position.y - finalY, rightArm.position.x - finalX) * 180 / Mathf.PI - 90;
-                    if (angle < -singleLimb || angle > singleLimb)
-                    {
-                        Debug.LogError("Right hand: " + angle);
-                        fall.Fall();
-                    }
-                }
-            } else if(limbsCollisionChecker.LimbsTouching == 0) 
-            {
-                fall.Fall();
             }
         }
     }
