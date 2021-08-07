@@ -119,11 +119,11 @@ public class LimbsCollisionChecker : MonoBehaviour
         segmentsManager.ChangeWeightAll(weight);
         if (!leftFoot)
         {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 15);
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 10);
         }
         if (!rightFoot && draggedLimb != SegmentsManager.LimbPosition.rightLeg)
         {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 15);
+            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 10);
         }
         if (!leftHand && draggedLimb != SegmentsManager.LimbPosition.leftHand)
         {
@@ -134,21 +134,5 @@ public class LimbsCollisionChecker : MonoBehaviour
             segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightHand, 10);
         }
 
-        if(draggedLimb != SegmentsManager.LimbPosition.leftLeg)
-        {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftLeg, 30);
-        }
-        if (draggedLimb != SegmentsManager.LimbPosition.rightLeg)
-        {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightLeg, 30);
-        }
-        if (draggedLimb != SegmentsManager.LimbPosition.leftHand)
-        {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.leftHand, 20);
-        }
-        if (draggedLimb != SegmentsManager.LimbPosition.rightHand)
-        {
-            segmentsManager.SetSingleWeight(SegmentsManager.LimbPosition.rightHand, 20);
-        }
     }
 }
